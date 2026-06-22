@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
 <title>台股美股定期定額複利計算機 | ETF 退休投資試算工具</title>
 <meta name="description" content="免費線上定期定額複利計算機，輸入初始本金、每月投入、年化報酬率與年限，即時試算 0050、高股息 ETF、債券 ETF 的資產成長與複利效果，並以圖表呈現本金與獲利。">
 <meta name="keywords" content="定期定額,複利計算機,年化報酬率,ETF,0050,0056,00878,高股息,債券ETF,00937B,00679B,退休試算,資產配置,複利效果">
@@ -13,6 +14,8 @@
 <meta property="og:title" content="台股美股定期定額複利計算機｜ETF 投資試算工具">
 <meta property="og:description" content="即時試算定期定額的複利威力，視覺化呈現累積本金與累積獲利的成長曲線。">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://slashman413.github.io/compound-calculator/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://slashman413.github.io/compound-calculator/og.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY95FHB8JG"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MY95FHB8JG');</script>
 
 <!-- Google AdSense (auto ads) -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5115666613619890" crossorigin="anonymous"></script>
@@ -78,6 +81,7 @@
   html{ scroll-behavior:smooth; }
   body{ font-family:'Noto Sans TC',system-ui,sans-serif; }
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"定期定額複利計算機","url":"https://slashman413.github.io/compound-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"複利是怎麼計算的？ / How is compound interest calculated?","acceptedAnswer":{"@type":"Answer","text":"以每月投入金額 + 年化報酬率逐月複利累積；本工具同時畫出累積本金 vs 累積獲利。Monthly contributions compound at your annual return rate; the chart shows principal vs gains."}},{"@type":"Question","name":"報酬率要填多少比較合理？ / What return rate is reasonable?","acceptedAnswer":{"@type":"Answer","text":"長期大盤 ETF 約 6–8%、高股息略低，僅供參考，非保證報酬。Broad-market ETFs historically ~6–8%; for reference only, not guaranteed."}},{"@type":"Question","name":"免費嗎？ / Is it free?","acceptedAnswer":{"@type":"Answer","text":"完全免費，本機運算。Completely free, runs locally."}}]}</script>
 </head>
 
 <body class="bg-slate-100 text-slate-800 antialiased">
@@ -492,5 +496,6 @@
   update();
 })();
 </script>
+<div style="max-width:680px;margin:20px auto;padding:0 16px;font-family:sans-serif;color:#334155"><div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;margin-bottom:8px">FAQ · 常見問題</div><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:8px"><summary style="cursor:pointer;font-weight:600">複利是怎麼計算的？ / How is it calculated?</summary><p style="margin-top:6px;font-size:14px;color:#475569">以每月投入 + 年化報酬率逐月複利累積，並畫出累積本金 vs 獲利。Monthly contributions compound at your annual rate; chart shows principal vs gains.</p></details><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:8px"><summary style="cursor:pointer;font-weight:600">報酬率填多少合理？ / What return rate?</summary><p style="margin-top:6px;font-size:14px;color:#475569">長期大盤 ETF 約 6–8%，僅供參考非保證。Broad-market ETFs ~6–8% historically; reference only.</p></details><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px"><summary style="cursor:pointer;font-weight:600">免費嗎？ / Free?</summary><p style="margin-top:6px;font-size:14px;color:#475569">完全免費，本機運算。Completely free, runs locally.</p></details></div>
 </body>
 </html>
