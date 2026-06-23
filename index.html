@@ -1,501 +1,154 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
-<title>台股美股定期定額複利計算機 | ETF 退休投資試算工具</title>
-<meta name="description" content="免費線上定期定額複利計算機，輸入初始本金、每月投入、年化報酬率與年限，即時試算 0050、高股息 ETF、債券 ETF 的資產成長與複利效果，並以圖表呈現本金與獲利。">
-<meta name="keywords" content="定期定額,複利計算機,年化報酬率,ETF,0050,0056,00878,高股息,債券ETF,00937B,00679B,退休試算,資產配置,複利效果">
-<meta name="author" content="複利計算機">
-<meta name="robots" content="index, follow">
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="台股美股定期定額複利計算機｜ETF 投資試算工具">
-<meta property="og:description" content="即時試算定期定額的複利威力，視覺化呈現累積本金與累積獲利的成長曲線。">
-<meta property="og:locale" content="zh_TW">
+<title>Compound Interest Calculator — Recurring Investment / ETF | 複利計算機</title>
+<meta name="description" id="metaDesc" content="Free compound interest calculator for recurring (dollar-cost-averaging) ETF & stock investing. Project long-term growth of principal vs gains. 免費定期定額複利計算機。">
+<meta name="keywords" content="compound interest calculator, recurring investment, dollar cost averaging, ETF calculator, retirement calculator, 複利計算機, calculadora interés compuesto, चक्रवृद्धि ब्याज, حاسبة الفائدة المركبة">
+<meta property="og:title" content="Compound Interest Calculator — Recurring Investment / ETF">
+<meta property="og:description" content="Project long-term ETF & stock growth. Free, 5 languages.">
 <meta property="og:image" content="https://slashman413.github.io/compound-calculator/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://slashman413.github.io/compound-calculator/og.png">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY95FHB8JG"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MY95FHB8JG');</script>
-
-<!-- Google AdSense (auto ads) -->
+<meta name="google-site-verification" content="jV8Xt5l-peRpLknp7xKYpvN8N5tCAkMctq0D-3RVyzk">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5115666613619890" crossorigin="anonymous"></script>
-
-<!-- Tailwind CSS (Play CDN) -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          brand:   { DEFAULT: '#4f46e5', light: '#6366f1' },
-          profit:  { DEFAULT: '#10b981' }
-        },
-        fontFamily: {
-          sans: ['"Noto Sans TC"', 'system-ui', 'sans-serif']
-        }
-      }
-    }
-  }
-</script>
-
-<!-- Fonts + FontAwesome + Chart.js -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY95FHB8JG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MY95FHB8JG');</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-<!-- 結構化資料：FAQ + WebApplication（SEO 加分） -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "台股美股定期定額複利計算機",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "All",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" },
-  "description": "線上定期定額複利試算工具，計算 ETF 長期投資的本金與獲利成長。"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "什麼是年化報酬率？", "acceptedAnswer": { "@type": "Answer", "text": "年化報酬率是把一段期間的總報酬換算成「平均每年」的複利成長率，方便比較不同商品。例如市值型大盤 ETF 長期年化約 7~9%。" } },
-    { "@type": "Question", "name": "定期定額的好處是什麼？", "acceptedAnswer": { "@type": "Answer", "text": "定期定額能分散進場時間、降低買在高點的風險（平均成本法），並透過紀律性投入搭配複利，長期累積可觀資產。" } },
-    { "@type": "Question", "name": "定期定額一定不會賠錢嗎？", "acceptedAnswer": { "@type": "Answer", "text": "不一定。定期定額能降低波動風險，但仍受市場長期走勢影響，過去績效不代表未來，需有長期持有與資產配置的觀念。" } }
-  ]
-}
-</script>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Compound Interest Calculator","url":"https://slashman413.github.io/compound-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"All","inLanguage":["en","zh-Hant","es","hi","ar"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <style>
-  /* AdSense 佔位區塊樣式 */
-  .adsense-placeholder{
-    background:#f1f5f9; border:1px dashed #cbd5e1; color:#94a3b8;
-    display:flex; align-items:center; justify-content:center;
-    min-height:110px; border-radius:0.75rem; font-size:0.875rem; letter-spacing:0.05em;
-  }
-  /* 結果數字更新時的微動畫 */
-  .stat-value{ transition: color .25s ease; }
-  /* 平滑捲動 */
-  html{ scroll-behavior:smooth; }
-  body{ font-family:'Noto Sans TC',system-ui,sans-serif; }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;background:#0a0a0f;color:#e8e8f0;padding:26px 16px 56px;line-height:1.6}
+  .wrap{max-width:640px;margin:0 auto}
+  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .topbar h1{font-size:21px;font-weight:800;flex:1}
+  select#lang{padding:7px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:#16161f;color:#c7c7f0;font-size:13px;font-weight:600;cursor:pointer}
+  .sub{color:#7878a0;font-size:13px;margin-bottom:18px}
+  .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:16px}
+  .seclabel{font-size:11px;font-weight:700;letter-spacing:1px;color:#7c7cb0;text-transform:uppercase;margin-bottom:12px}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:13px;color:#b8b8d0;margin-bottom:5px}
+  .field input{width:100%;background:#12121a;border:1px solid rgba(255,255,255,.12);border-radius:10px;color:#e8e8f0;padding:11px;font-size:16px;font-weight:600}
+  .presets{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+  .presets button{padding:6px 11px;border-radius:99px;border:1px solid rgba(99,102,241,.35);background:rgba(99,102,241,.12);color:#c7c7f0;font-size:12px;cursor:pointer}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{background:#101018;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:13px}
+  .stat .l{font-size:11.5px;color:#8888b0}.stat .v{font-size:20px;font-weight:800;color:#a5b4fc;margin-top:3px}
+  .stat.hl .v{color:#34d399}
+  .chartwrap{margin-top:14px}
+  .cap{font-size:11.5px;color:#686898;margin-top:8px;text-align:center}
+  .ad-slot{width:100%;min-height:100px;background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.07);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#303048;margin:18px 0}
+  .edu p{font-size:14px;color:#b8b8c8;margin-bottom:12px}
+  details{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 13px;margin-bottom:8px}summary{cursor:pointer;font-weight:600;font-size:14px}details p{margin-top:8px;font-size:13px;color:#9a9ac0}
+  .footer{margin-top:22px;text-align:center;font-size:11.5px;color:#55557a;line-height:1.9}.footer a{color:#8888c0;text-decoration:none}
+  html[dir=rtl] .topbar h1,html[dir=rtl] .sub,html[dir=rtl] .field label,html[dir=rtl] .seclabel,html[dir=rtl] .edu,html[dir=rtl] details{text-align:right}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"定期定額複利計算機","url":"https://slashman413.github.io/compound-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"複利是怎麼計算的？ / How is compound interest calculated?","acceptedAnswer":{"@type":"Answer","text":"以每月投入金額 + 年化報酬率逐月複利累積；本工具同時畫出累積本金 vs 累積獲利。Monthly contributions compound at your annual return rate; the chart shows principal vs gains."}},{"@type":"Question","name":"報酬率要填多少比較合理？ / What return rate is reasonable?","acceptedAnswer":{"@type":"Answer","text":"長期大盤 ETF 約 6–8%、高股息略低，僅供參考，非保證報酬。Broad-market ETFs historically ~6–8%; for reference only, not guaranteed."}},{"@type":"Question","name":"免費嗎？ / Is it free?","acceptedAnswer":{"@type":"Answer","text":"完全免費，本機運算。Completely free, runs locally."}}]}</script>
 </head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span style="font-size:24px">📈</span>
+    <h1 data-i="title">Compound Interest Calculator</h1>
+    <select id="lang" onchange="setLang(this.value)" aria-label="Language">
+      <option value="en">🌐 English</option>
+      <option value="zh">🇹🇼 中文</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+      <option value="ar">🇸🇦 العربية</option>
+    </select>
+  </div>
+  <div class="sub" data-i="sub">Project long-term ETF & stock growth — see the power of compounding.</div>
 
-<body class="bg-slate-100 text-slate-800 antialiased">
-
-<!-- ===================== Header ===================== -->
-<header class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg">
-  <div class="max-w-6xl mx-auto px-4 py-6 sm:py-8">
-    <div class="flex items-center gap-3">
-      <i class="fa-solid fa-chart-line text-3xl sm:text-4xl text-indigo-200"></i>
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-black tracking-tight">定期定額複利計算機</h1>
-        <p class="text-indigo-100 text-sm sm:text-base mt-1">台股 · 美股 · ETF 長期投資試算，看見複利的威力</p>
+  <div class="card">
+    <div class="seclabel" data-i="sec_in">Your investment plan</div>
+    <div class="field"><label data-i="l_init">Initial lump sum</label><input type="number" id="initial" value="10000" oninput="update()"></div>
+    <div class="field"><label data-i="l_month">Monthly contribution</label><input type="number" id="monthly" value="500" oninput="update()"></div>
+    <div class="field"><label data-i="l_rate">Expected annual return (%)</label><input type="number" id="rate" value="8" step="0.1" oninput="update()">
+      <div class="presets">
+        <button onclick="setRate(8)" data-i="p_mkt">Market ETF ~8%</button>
+        <button onclick="setRate(6)" data-i="p_div">High-dividend ~6%</button>
+        <button onclick="setRate(5)" data-i="p_bond">Bonds ~5%</button>
       </div>
     </div>
-  </div>
-</header>
-
-<main class="max-w-6xl mx-auto px-4 py-6 sm:py-10">
-
-  <!-- ===================== 計算器主體（Mobile: 上下 / Desktop: 左右兩欄） ===================== -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-    <!-- 左欄：輸入表單 -->
-    <section class="bg-white rounded-2xl shadow-md p-5 sm:p-7" aria-label="投資參數輸入">
-      <h2 class="text-lg font-bold mb-5 flex items-center gap-2 text-slate-700">
-        <i class="fa-solid fa-sliders text-indigo-500"></i> 輸入你的投資計畫
-      </h2>
-
-      <form id="calc-form" class="space-y-5" autocomplete="off">
-
-        <!-- 初始單筆 -->
-        <div>
-          <label for="initial" class="block text-sm font-semibold mb-1.5 text-slate-600">
-            <i class="fa-solid fa-sack-dollar text-amber-500 mr-1"></i> 初始單筆投入金額（元）
-          </label>
-          <input type="number" id="initial" inputmode="numeric" min="0" step="1000" value="100000"
-            class="w-full px-4 py-3 text-lg rounded-xl border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-          <p class="text-xs text-slate-400 mt-1" id="initial-hint"></p>
-        </div>
-
-        <!-- 每月定期定額 -->
-        <div>
-          <label for="monthly" class="block text-sm font-semibold mb-1.5 text-slate-600">
-            <i class="fa-solid fa-calendar-check text-emerald-500 mr-1"></i> 每月定期定額投入（元）
-          </label>
-          <input type="number" id="monthly" inputmode="numeric" min="0" step="1000" value="10000"
-            class="w-full px-4 py-3 text-lg rounded-xl border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-          <p class="text-xs text-slate-400 mt-1" id="monthly-hint"></p>
-        </div>
-
-        <!-- 年化報酬率 -->
-        <div>
-          <label for="rate" class="block text-sm font-semibold mb-1.5 text-slate-600">
-            <i class="fa-solid fa-percent text-rose-500 mr-1"></i> 預期年化報酬率（%）
-          </label>
-          <input type="number" id="rate" inputmode="decimal" min="0" step="0.1" value="8"
-            class="w-full px-4 py-3 text-lg rounded-xl border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-
-          <!-- 快速帶入按鈕 -->
-          <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <button type="button" data-rate="8" class="quick-btn group">
-              <span class="font-bold text-indigo-600 group-hover:text-white">8%</span>
-              <span class="block text-xs">市值型大盤 0050</span>
-            </button>
-            <button type="button" data-rate="6" class="quick-btn group">
-              <span class="font-bold text-indigo-600 group-hover:text-white">6%</span>
-              <span class="block text-xs">高股息 ETF</span>
-            </button>
-            <button type="button" data-rate="5" class="quick-btn group">
-              <span class="font-bold text-indigo-600 group-hover:text-white">5%</span>
-              <span class="block text-xs">投資級債券</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 投資年限 -->
-        <div>
-          <label for="years" class="block text-sm font-semibold mb-1.5 text-slate-600">
-            <i class="fa-solid fa-hourglass-half text-violet-500 mr-1"></i> 投資年限（年）
-          </label>
-          <input type="number" id="years" inputmode="numeric" min="1" max="60" step="1" value="20"
-            class="w-full px-4 py-3 text-lg rounded-xl border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-        </div>
-      </form>
-    </section>
-
-    <!-- 右欄：結果 + 圖表 -->
-    <section class="space-y-6" aria-label="試算結果">
-
-      <!-- 結果數字 -->
-      <div class="bg-white rounded-2xl shadow-md p-5 sm:p-7">
-        <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-700">
-          <i class="fa-solid fa-trophy text-amber-500"></i> 試算結果
-        </h2>
-
-        <!-- 期末總資產（主數字） -->
-        <div class="bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-xl p-5 mb-4">
-          <p class="text-indigo-100 text-sm">期末總資產</p>
-          <p id="r-total" class="stat-value text-3xl sm:text-4xl font-black mt-1">—</p>
-          <p id="r-total-cn" class="text-indigo-100 text-sm mt-1"></p>
-        </div>
-
-        <!-- 本金 / 獲利 -->
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <p class="text-slate-500 text-xs"><i class="fa-solid fa-coins text-slate-400 mr-1"></i>總投入本金</p>
-            <p id="r-principal" class="stat-value text-xl font-bold text-slate-700 mt-1">—</p>
-          </div>
-          <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-            <p class="text-emerald-600 text-xs"><i class="fa-solid fa-arrow-trend-up mr-1"></i>總獲利金額</p>
-            <p id="r-profit" class="stat-value text-xl font-bold text-emerald-600 mt-1">—</p>
-          </div>
-        </div>
-
-        <!-- 報酬率 -->
-        <div class="mt-3 text-center text-sm text-slate-500">
-          總報酬率 <span id="r-roi" class="font-bold text-rose-500">—</span>
-          ，其中獲利佔總資產 <span id="r-share" class="font-bold text-emerald-600">—</span>
-        </div>
-      </div>
-
-      <!-- 圖表 -->
-      <div class="bg-white rounded-2xl shadow-md p-5 sm:p-7">
-        <h3 class="text-base font-bold mb-1 flex items-center gap-2 text-slate-700">
-          <i class="fa-solid fa-chart-column text-indigo-500"></i> 資產成長曲線
-        </h3>
-        <p class="text-xs text-slate-400 mb-3">下層為累積本金，上層為累積獲利 — 複利讓綠色部分越滾越大</p>
-        <div class="relative h-72 sm:h-80">
-          <canvas id="growth-chart"></canvas>
-        </div>
-      </div>
-    </section>
+    <div class="field"><label data-i="l_years">Years</label><input type="number" id="years" value="20" oninput="update()"></div>
   </div>
 
-  <!-- ===================== AdSense 版位 1（結果下方） ===================== -->
-  <div class="adsense-placeholder mt-6">
-    廣告區塊（728×90 / 自適應）— 預留給 Google AdSense
+  <div class="card">
+    <div class="seclabel" data-i="sec_res">Results</div>
+    <div class="stats">
+      <div class="stat hl"><div class="l" data-i="r_final">Final total assets</div><div class="v" id="rFinal">—</div></div>
+      <div class="stat"><div class="l" data-i="r_prin">Total contributed</div><div class="v" id="rPrin">—</div></div>
+      <div class="stat"><div class="l" data-i="r_gain">Total gains</div><div class="v" id="rGain">—</div></div>
+      <div class="stat"><div class="l" data-i="r_ret">Total return</div><div class="v" id="rRet">—</div></div>
+    </div>
+    <div class="chartwrap"><canvas id="chart" height="200"></canvas></div>
+    <div class="cap" data-i="cap">Lower = principal, upper = gains — compounding grows the green part faster over time.</div>
   </div>
 
-  <!-- ===================== SEO 內容：教學 + FAQ ===================== -->
-  <article class="bg-white rounded-2xl shadow-md p-6 sm:p-9 mt-8 prose-slate max-w-none leading-relaxed">
+  <ins class="adsbygoogle ad-slot" style="display:block" data-ad-client="ca-pub-5115666613619890" data-ad-format="auto" data-full-width-responsive="true"></ins>
 
-    <h2 class="text-2xl font-black text-slate-800 mb-4 flex items-center gap-2">
-      <i class="fa-solid fa-book-open text-indigo-500"></i> 定期定額與複利觀念教學
-    </h2>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-5 mb-2">什麼是複利？愛因斯坦口中的世界第八大奇蹟</h3>
-    <p class="text-slate-600">
-      複利（Compound Interest）指的是「利滾利」——你賺到的獲利會再投入、繼續產生獲利。
-      與單利不同，複利的成長曲線會隨著時間呈現「指數型」上升。投資年限越長，複利效果越驚人，
-      這也是為什麼長期投資（10 年、20 年以上）能讓一筆看似平凡的每月小額投入，最終累積成可觀的退休資產。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-5 mb-2">什麼是定期定額（Dollar-Cost Averaging）？</h3>
-    <p class="text-slate-600">
-      定期定額是在固定的時間（通常為每月）投入固定金額買進同一檔標的（例如 0050、0056、00878 或 S&P 500 ETF）。
-      它的核心精神是「平均成本法」：當市場下跌時，同樣金額能買到更多單位；市場上漲時則買到較少單位，
-      長期下來能平滑買進成本、避免「一次重壓買在最高點」的風險，特別適合沒有時間盯盤的上班族與小資族。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-5 mb-2">什麼是年化報酬率？</h3>
-    <p class="text-slate-600">
-      年化報酬率（CAGR）是把整段投資期間的總報酬，換算成「平均每年」的複利成長率，方便橫向比較不同商品。
-      以台股為例，市值型大盤 ETF（如 0050）長期年化報酬約落在 <strong>7~9%</strong>；
-      高股息 ETF 約 <strong>5~7%</strong>；投資級債券 ETF（如 00937B、00679B）則相對穩健，約 <strong>4~5%</strong>。
-      本計算機預設提供這三組常見數字作為「快速帶入」，方便你快速比較不同資產配置的長期結果。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-5 mb-2">定期定額的三大好處</h3>
-    <ul class="list-disc pl-6 text-slate-600 space-y-1">
-      <li><strong>紀律投資：</strong>強迫儲蓄、自動扣款，克服人性追高殺低的弱點。</li>
-      <li><strong>分散風險：</strong>分批進場攤平成本，降低單一時間點的價格波動衝擊。</li>
-      <li><strong>複利加乘：</strong>持續再投入搭配時間，讓資產雪球越滾越大。</li>
-    </ul>
-
-    <h2 class="text-2xl font-black text-slate-800 mt-8 mb-4 flex items-center gap-2">
-      <i class="fa-regular fa-circle-question text-indigo-500"></i> 常見問題 FAQ
-    </h2>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-4 mb-1">Q：年化報酬率要設定多少才合理？</h3>
-    <p class="text-slate-600">
-      建議採用「保守且接近歷史長期平均」的數字。過度樂觀（例如設 15% 以上）會嚴重高估結果。
-      參考值：市值型 ETF 約 8%、高股息 ETF 約 6%、債券 ETF 約 5%。試算時不妨多抓幾組情境做比較。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-4 mb-1">Q：市值型 ETF 與高股息 ETF 哪個比較好？</h3>
-    <p class="text-slate-600">
-      兩者各有定位。市值型（0050、006208）追求總報酬與資本成長，適合資產累積期的年輕投資人；
-      高股息（0056、00878）強調現金流，適合退休或需要被動收入者。許多人會兩者搭配做資產配置。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-4 mb-1">Q：定期定額一定不會賠錢嗎？</h3>
-    <p class="text-slate-600">
-      不一定。定期定額能降低「進場時機」的風險，但無法消除市場系統性風險。
-      過去績效不代表未來，務必搭配長期持有、分散標的與適度的股債配置，並準備緊急預備金。
-    </p>
-
-    <h3 class="text-lg font-bold text-slate-700 mt-4 mb-1">Q：這個計算機的計算方式準確嗎？</h3>
-    <p class="text-slate-600">
-      本工具採用「每月複利」模型：每月以年化報酬率換算的月報酬率成長，並於月底投入定期定額金額。
-      實際投資會受配息再投入、手續費、稅負與市場波動影響，故結果僅供長期趨勢試算與教育參考，非投資建議。
-    </p>
-  </article>
-
-  <!-- ===================== AdSense 版位 2（頁面最下方） ===================== -->
-  <div class="adsense-placeholder mt-8">
-    廣告區塊（自適應）— 預留給 Google AdSense
+  <div class="card edu">
+    <div class="seclabel" data-i="edu_t">How compounding works</div>
+    <p data-i="edu_1">Compound interest means your gains are reinvested and earn more gains. The growth curve becomes exponential — the longer you invest (10, 20+ years), the more dramatic the effect.</p>
+    <p data-i="edu_2">Recurring investing (dollar-cost averaging) means investing a fixed amount on a fixed schedule. It averages your entry cost and removes the risk of buying everything at the top — ideal for busy people.</p>
   </div>
 
-</main>
-
-<!-- ===================== Footer ===================== -->
-<footer class="bg-slate-800 text-slate-300 mt-10">
-  <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm">
-    <p>© 2026 定期定額複利計算機 · 本工具僅供教育與試算參考，不構成任何投資建議。</p>
-    <p class="mt-2"><a href="https://slashman413.github.io/terms.html" class="text-indigo-300 hover:text-indigo-200 underline">服務說明</a> · <a href="https://slashman413.github.io/privacy.html" class="text-indigo-300 hover:text-indigo-200 underline">隱私權政策</a></p>
+  <div class="card">
+    <div class="seclabel" data-i="faq_t">FAQ</div>
+    <details><summary data-i="q1">What annual return is reasonable?</summary><p data-i="a1">Use a conservative number close to long-term averages: broad-market ETFs ~8%, high-dividend ~6%, bonds ~5%. Over-optimistic rates badly overestimate results.</p></details>
+    <details><summary data-i="q2">Does recurring investing guarantee profit?</summary><p data-i="a2">No. It lowers timing risk but not market risk. Past performance doesn't predict the future — hold long-term and diversify.</p></details>
+    <details><summary data-i="q3">Is it free?</summary><p data-i="a3">Yes — completely free and runs locally in your browser.</p></details>
   </div>
-</footer>
 
-<!-- 快速按鈕的客製化樣式（用 Tailwind @apply 風格手寫） -->
-<style>
-  .quick-btn{
-    text-align:center; padding:0.5rem; border:1px solid #c7d2fe; border-radius:0.75rem;
-    background:#eef2ff; transition:all .15s ease; line-height:1.2; color:#475569;
-  }
-  .quick-btn:hover{ background:#4f46e5; color:#fff; border-color:#4f46e5; }
-  .quick-btn.active{ background:#4f46e5; color:#fff; border-color:#4f46e5; box-shadow:0 4px 12px rgba(79,70,229,.35); }
-  .quick-btn.active span{ color:#fff !important; }
-</style>
-
+  <div class="footer">
+    <span data-i="disc">For education only · not investment advice.</span><br>
+    <a href="https://slashman413.github.io/tools/">🧰 More free tools</a> · <a href="https://slashman413.github.io/terms.html" data-i="terms">Terms</a> · <a href="https://slashman413.github.io/privacy.html" data-i="priv">Privacy</a>
+    <div id="vc" style="margin-top:10px;opacity:.85"></div>
+  </div>
+</div>
 <script>
-/* ============================================================
-   定期定額複利計算機 — Vanilla JS
-   ============================================================ */
-(function () {
-  'use strict';
-
-  const LS_KEY = 'dca_calc_inputs_v1';
-  const $ = (id) => document.getElementById(id);
-
-  const el = {
-    initial:  $('initial'),
-    monthly:  $('monthly'),
-    rate:     $('rate'),
-    years:    $('years'),
-    rTotal:   $('r-total'),
-    rTotalCn: $('r-total-cn'),
-    rPrincipal: $('r-principal'),
-    rProfit:  $('r-profit'),
-    rRoi:     $('r-roi'),
-    rShare:   $('r-share'),
-    initialHint: $('initial-hint'),
-    monthlyHint: $('monthly-hint'),
+  const I18N={
+    en:{title:"Compound Interest Calculator",sub:"Project long-term ETF & stock growth — see the power of compounding.",sec_in:"Your investment plan",l_init:"Initial lump sum",l_month:"Monthly contribution",l_rate:"Expected annual return (%)",p_mkt:"Market ETF ~8%",p_div:"High-dividend ~6%",p_bond:"Bonds ~5%",l_years:"Years",sec_res:"Results",r_final:"Final total assets",r_prin:"Total contributed",r_gain:"Total gains",r_ret:"Total return",cap:"Lower = principal, upper = gains — compounding grows the green part faster over time.",edu_t:"How compounding works",edu_1:"Compound interest means your gains are reinvested and earn more gains. The growth curve becomes exponential — the longer you invest (10, 20+ years), the more dramatic the effect.",edu_2:"Recurring investing (dollar-cost averaging) means investing a fixed amount on a fixed schedule. It averages your entry cost and removes the risk of buying everything at the top — ideal for busy people.",faq_t:"FAQ",q1:"What annual return is reasonable?",a1:"Use a conservative number close to long-term averages: broad-market ETFs ~8%, high-dividend ~6%, bonds ~5%. Over-optimistic rates badly overestimate results.",q2:"Does recurring investing guarantee profit?",a2:"No. It lowers timing risk but not market risk. Past performance doesn't predict the future — hold long-term and diversify.",q3:"Is it free?",a3:"Yes — completely free and runs locally in your browser.",disc:"For education only · not investment advice.",terms:"Terms",priv:"Privacy",start:"Start"},
+    zh:{title:"定期定額複利計算機",sub:"台股・美股・ETF 長期投資試算，看見複利的威力。",sec_in:"輸入你的投資計畫",l_init:"初始單筆投入金額",l_month:"每月定期定額投入",l_rate:"預期年化報酬率（%）",p_mkt:"市值型 0050 ~8%",p_div:"高股息 ~6%",p_bond:"債券 ~5%",l_years:"投資年限（年）",sec_res:"試算結果",r_final:"期末總資產",r_prin:"總投入本金",r_gain:"總獲利金額",r_ret:"總報酬率",cap:"下層為累積本金，上層為累積獲利 — 複利讓綠色部分越滾越大。",edu_t:"複利是怎麼運作的",edu_1:"複利就是「利滾利」——你賺到的獲利會再投入、繼續產生獲利，成長曲線呈指數型上升。投資年限越長（10、20 年以上），複利效果越驚人。",edu_2:"定期定額（平均成本法）是固定時間投入固定金額。它能平滑買進成本、避免一次重壓買在最高點，特別適合沒時間盯盤的上班族。",faq_t:"常見問題",q1:"年化報酬率設多少合理？",a1:"建議採用接近歷史長期平均的保守數字：市值型 ETF 約 8%、高股息約 6%、債券約 5%。設太樂觀會嚴重高估結果。",q2:"定期定額一定會賺嗎？",a2:"不一定。它能降低進場時機風險，但無法消除市場風險。過去績效不代表未來，務必長期持有並分散。",q3:"免費嗎？",a3:"完全免費，全部在你瀏覽器本機運算。",disc:"僅供教育與試算參考，不構成投資建議。",terms:"服務說明",priv:"隱私權政策",start:"開始"},
+    es:{title:"Calculadora de Interés Compuesto",sub:"Proyecta el crecimiento a largo plazo de ETF y acciones — descubre el poder del interés compuesto.",sec_in:"Tu plan de inversión",l_init:"Inversión inicial",l_month:"Aportación mensual",l_rate:"Rentabilidad anual esperada (%)",p_mkt:"ETF de mercado ~8%",p_div:"Alto dividendo ~6%",p_bond:"Bonos ~5%",l_years:"Años",sec_res:"Resultados",r_final:"Activos totales finales",r_prin:"Total aportado",r_gain:"Ganancia total",r_ret:"Rentabilidad total",cap:"Abajo = capital, arriba = ganancias — el interés compuesto hace crecer la parte verde con el tiempo.",edu_t:"Cómo funciona el interés compuesto",edu_1:"El interés compuesto significa que tus ganancias se reinvierten y generan más ganancias. La curva se vuelve exponencial: cuanto más tiempo inviertas (10, 20+ años), mayor es el efecto.",edu_2:"Invertir periódicamente (promediar el costo) es invertir una cantidad fija con regularidad. Suaviza tu costo de entrada y evita comprar todo en el punto más alto — ideal para gente ocupada.",faq_t:"Preguntas frecuentes",q1:"¿Qué rentabilidad anual es razonable?",a1:"Usa un número conservador cercano a la media histórica: ETF amplios ~8%, alto dividendo ~6%, bonos ~5%. Tasas demasiado optimistas sobreestiman mucho.",q2:"¿Invertir periódicamente garantiza ganancias?",a2:"No. Reduce el riesgo de tiempo, pero no el de mercado. El rendimiento pasado no predice el futuro — mantén a largo plazo y diversifica.",q3:"¿Es gratis?",a3:"Sí — totalmente gratis y funciona localmente en tu navegador.",disc:"Solo educativo · no es asesoramiento de inversión.",terms:"Términos",priv:"Privacidad",start:"Empezar"},
+    hi:{title:"चक्रवृद्धि ब्याज कैलकुलेटर",sub:"ETF और शेयरों की दीर्घकालिक वृद्धि का अनुमान लगाएं — चक्रवृद्धि की शक्ति देखें।",sec_in:"आपकी निवेश योजना",l_init:"प्रारंभिक एकमुश्त राशि",l_month:"मासिक निवेश",l_rate:"अपेक्षित वार्षिक रिटर्न (%)",p_mkt:"मार्केट ETF ~8%",p_div:"उच्च लाभांश ~6%",p_bond:"बॉन्ड ~5%",l_years:"वर्ष",sec_res:"परिणाम",r_final:"अंतिम कुल संपत्ति",r_prin:"कुल निवेश",r_gain:"कुल लाभ",r_ret:"कुल रिटर्न",cap:"नीचे = मूलधन, ऊपर = लाभ — चक्रवृद्धि समय के साथ हरे भाग को तेज़ी से बढ़ाती है।",edu_t:"चक्रवृद्धि कैसे काम करती है",edu_1:"चक्रवृद्धि ब्याज का अर्थ है आपका लाभ फिर से निवेश होकर और लाभ कमाता है। वक्र घातांकी हो जाता है — जितना लंबा निवेश (10, 20+ वर्ष), उतना बड़ा प्रभाव।",edu_2:"नियमित निवेश (औसत लागत) यानी निश्चित समय पर निश्चित राशि निवेश करना। यह आपकी लागत को औसत करता है और सबसे ऊंचे स्तर पर सब कुछ खरीदने का जोखिम हटाता है।",faq_t:"सामान्य प्रश्न",q1:"कौन सा वार्षिक रिटर्न उचित है?",a1:"दीर्घकालिक औसत के करीब रूढ़िवादी संख्या लें: व्यापक ETF ~8%, उच्च लाभांश ~6%, बॉन्ड ~5%। अति-आशावादी दरें परिणाम को बहुत बढ़ा देती हैं।",q2:"क्या नियमित निवेश लाभ की गारंटी है?",a2:"नहीं। यह समय का जोखिम घटाता है, बाज़ार का नहीं। पिछला प्रदर्शन भविष्य का संकेत नहीं — लंबे समय तक रखें और विविधता रखें।",q3:"क्या यह मुफ़्त है?",a3:"हाँ — पूरी तरह मुफ़्त, आपके ब्राउज़र में ही चलता है।",disc:"केवल शिक्षा हेतु · निवेश सलाह नहीं।",terms:"शर्तें",priv:"गोपनीयता",start:"शुरू"},
+    ar:{title:"حاسبة الفائدة المركبة",sub:"توقّع نمو صناديق ETF والأسهم على المدى الطويل — اكتشف قوة الفائدة المركبة.",sec_in:"خطة استثمارك",l_init:"المبلغ المبدئي",l_month:"المساهمة الشهرية",l_rate:"العائد السنوي المتوقع (%)",p_mkt:"صندوق السوق ~8%",p_div:"توزيعات عالية ~6%",p_bond:"سندات ~5%",l_years:"السنوات",sec_res:"النتائج",r_final:"إجمالي الأصول النهائي",r_prin:"إجمالي المُستثمَر",r_gain:"إجمالي الأرباح",r_ret:"العائد الإجمالي",cap:"الأسفل = رأس المال، الأعلى = الأرباح — الفائدة المركبة تنمّي الجزء الأخضر بمرور الوقت.",edu_t:"كيف تعمل الفائدة المركبة",edu_1:"الفائدة المركبة تعني إعادة استثمار أرباحك لتولّد أرباحاً أكثر. يصبح المنحنى أُسّياً — كلما طالت مدة الاستثمار (10، 20+ سنة) كان التأثير أكبر.",edu_2:"الاستثمار الدوري (متوسط التكلفة) هو استثمار مبلغ ثابت بانتظام. يُوازن تكلفة الدخول ويزيل خطر الشراء عند القمة — مثالي للمشغولين.",faq_t:"الأسئلة الشائعة",q1:"ما العائد السنوي المعقول؟",a1:"استخدم رقماً متحفظاً قريباً من المتوسط التاريخي: صناديق واسعة ~8%، توزيعات عالية ~6%، سندات ~5%. المعدلات المتفائلة جداً تبالغ في النتائج.",q2:"هل الاستثمار الدوري يضمن الربح؟",a2:"لا. يقلّل مخاطر التوقيت لا مخاطر السوق. الأداء السابق لا يتنبأ بالمستقبل — احتفظ طويلاً ونوّع.",q3:"هل هي مجانية؟",a3:"نعم — مجانية تماماً وتعمل محلياً في متصفحك.",disc:"للتعليم فقط · ليست نصيحة استثمارية.",terms:"الشروط",priv:"الخصوصية",start:"ابدأ"}
   };
-
-  // 千分位格式化
-  const fmt = (n) => Math.round(n).toLocaleString('zh-TW');
-  // 中文「萬 / 億」概略表示
-  const toCn = (n) => {
-    n = Math.round(n);
-    if (n >= 1e8) return '約 ' + (n / 1e8).toFixed(2) + ' 億元';
-    if (n >= 1e4) return '約 ' + (n / 1e4).toFixed(1) + ' 萬元';
-    return n.toLocaleString('zh-TW') + ' 元';
-  };
-  const num = (v, d = 0) => { const x = parseFloat(v); return isFinite(x) ? x : d; };
-
-  let chart = null;
-
-  // ---- 核心計算：每月複利模擬 ----
-  function compute() {
-    const initial = Math.max(0, num(el.initial.value));
-    const monthly = Math.max(0, num(el.monthly.value));
-    const annual  = Math.max(0, num(el.rate.value)) / 100;
-    const years   = Math.min(60, Math.max(0, Math.floor(num(el.years.value))));
-
-    const mRate = Math.pow(1 + annual, 1 / 12) - 1; // 年化換算月報酬率
-
-    let balance = initial;
-    let principal = initial;
-
-    const labels = ['起始'];
-    const principalData = [Math.round(principal)];
-    const profitData = [0];
-
-    for (let y = 1; y <= years; y++) {
-      for (let m = 0; m < 12; m++) {
-        balance = balance * (1 + mRate) + monthly; // 月底成長 + 投入
-        principal += monthly;
-      }
-      labels.push(y + ' 年');
-      principalData.push(Math.round(principal));
-      profitData.push(Math.round(balance - principal));
-    }
-
-    return {
-      total: balance,
-      principal: principal,
-      profit: balance - principal,
-      labels, principalData, profitData
-    };
+  const RTL=["ar"];
+  const $=id=>document.getElementById(id);
+  let LANG=localStorage.getItem('cc_lang')||(navigator.language||'en').slice(0,2);
+  if(!I18N[LANG])LANG='en';
+  function setLang(l){ if(!I18N[l])l='en'; LANG=l; const d=I18N[l];
+    document.querySelectorAll('[data-i]').forEach(e=>{const k=e.getAttribute('data-i'); if(d[k]!==undefined)e.textContent=d[k];});
+    document.documentElement.lang = l==='zh'?'zh-Hant':l;
+    document.documentElement.dir = RTL.includes(l)?'rtl':'ltr';
+    $("lang").value=l; localStorage.setItem('cc_lang',l); update();
   }
-
-  // ---- 更新數字結果 ----
-  function renderStats(r) {
-    el.rTotal.textContent     = fmt(r.total) + ' 元';
-    el.rTotalCn.textContent   = toCn(r.total);
-    el.rPrincipal.textContent = fmt(r.principal) + ' 元';
-    el.rProfit.textContent    = fmt(r.profit) + ' 元';
-    const roi   = r.principal > 0 ? (r.profit / r.principal * 100) : 0;
-    const share = r.total > 0 ? (r.profit / r.total * 100) : 0;
-    el.rRoi.textContent   = roi.toFixed(1) + '%';
-    el.rShare.textContent = share.toFixed(1) + '%';
-
-    el.initialHint.textContent = el.initial.value ? '＝ ' + toCn(num(el.initial.value)) : '';
-    el.monthlyHint.textContent = el.monthly.value ? '＝ ' + toCn(num(el.monthly.value)) : '';
+  window.setLang=setLang;
+  function setRate(r){ $("rate").value=r; update(); } window.setRate=setRate;
+  const num=(v,d=0)=>{const x=parseFloat(v);return isFinite(x)?x:d;};
+  const fmt=n=>Math.round(n).toLocaleString(LANG==='zh'?'zh-TW':LANG);
+  let chart=null;
+  function update(){
+    const initial=Math.max(0,num($("initial").value)), monthly=Math.max(0,num($("monthly").value));
+    const annual=Math.max(0,num($("rate").value))/100, years=Math.min(60,Math.max(0,Math.floor(num($("years").value))));
+    const mRate=Math.pow(1+annual,1/12)-1;
+    let bal=initial, prin=initial; const labels=['0'], pData=[Math.round(prin)], gData=[0];
+    for(let y=1;y<=years;y++){ for(let m=0;m<12;m++){ bal=bal*(1+mRate)+monthly; prin+=monthly; } labels.push(String(y)); pData.push(Math.round(prin)); gData.push(Math.round(bal-prin)); }
+    const gain=bal-prin, ret=prin>0?(gain/prin*100):0;
+    $("rFinal").textContent=fmt(bal); $("rPrin").textContent=fmt(prin); $("rGain").textContent=fmt(gain); $("rRet").textContent=ret.toFixed(1)+'%';
+    const ctx=$("chart").getContext('2d');
+    const ds=[{label:I18N[LANG].r_prin,data:pData,backgroundColor:'rgba(99,102,241,.5)',borderColor:'#6366f1',fill:true,tension:.25,pointRadius:0},
+              {label:I18N[LANG].r_gain,data:gData.map((g,i)=>g+pData[i]),backgroundColor:'rgba(52,211,153,.45)',borderColor:'#34d399',fill:true,tension:.25,pointRadius:0}];
+    if(chart){chart.data.labels=labels;chart.data.datasets[0].data=pData;chart.data.datasets[1].data=gData.map((g,i)=>g+pData[i]);chart.data.datasets[0].label=I18N[LANG].r_prin;chart.data.datasets[1].label=I18N[LANG].r_gain;chart.update();}
+    else{chart=new Chart(ctx,{type:'line',data:{labels,datasets:ds},options:{responsive:true,plugins:{legend:{labels:{color:'#9a9ac0',font:{size:11}}}},scales:{x:{ticks:{color:'#666',maxTicksLimit:11},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'#666',callback:v=>v>=1000?(v/1000)+'k':v},grid:{color:'rgba(255,255,255,.05)'}}}}});}
   }
-
-  // ---- 圖表 ----
-  function renderChart(r) {
-    const ctx = $('growth-chart').getContext('2d');
-    const data = {
-      labels: r.labels,
-      datasets: [
-        { label: '累積本金', data: r.principalData, backgroundColor: '#6366f1', stack: 's', borderRadius: 3, maxBarThickness: 38 },
-        { label: '累積獲利', data: r.profitData,    backgroundColor: '#10b981', stack: 's', borderRadius: 3, maxBarThickness: 38 }
-      ]
-    };
-    const yTick = (v) => (v >= 1e8) ? (v / 1e8) + '億'
-                       : (v >= 1e4) ? (v / 1e4) + '萬'
-                       : v.toLocaleString('zh-TW');
-
-    if (chart) {
-      chart.data = data;
-      chart.update();
-      return;
-    }
-    chart = new Chart(ctx, {
-      type: 'bar',
-      data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, font: { size: 13 } } },
-          tooltip: {
-            callbacks: {
-              label: (c) => '  ' + c.dataset.label + '：' + fmt(c.parsed.y) + ' 元',
-              footer: (items) => {
-                const sum = items.reduce((s, i) => s + i.parsed.y, 0);
-                return '總資產：' + fmt(sum) + ' 元';
-              }
-            }
-          }
-        },
-        scales: {
-          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
-          y: { stacked: true, beginAtZero: true,
-               ticks: { callback: yTick, font: { size: 11 } },
-               grid: { color: '#f1f5f9' } }
-        }
-      }
-    });
-  }
-
-  // ---- localStorage ----
-  function save() {
-    const data = {
-      initial: el.initial.value, monthly: el.monthly.value,
-      rate: el.rate.value, years: el.years.value
-    };
-    try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch (e) {}
-  }
-  function load() {
-    try {
-      const d = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-      if (d) {
-        if (d.initial !== undefined) el.initial.value = d.initial;
-        if (d.monthly !== undefined) el.monthly.value = d.monthly;
-        if (d.rate    !== undefined) el.rate.value    = d.rate;
-        if (d.years   !== undefined) el.years.value   = d.years;
-      }
-    } catch (e) {}
-  }
-
-  // ---- 快速帶入按鈕 active 狀態 ----
-  function syncQuickButtons() {
-    document.querySelectorAll('.quick-btn').forEach((b) => {
-      b.classList.toggle('active', parseFloat(b.dataset.rate) === parseFloat(el.rate.value));
-    });
-  }
-
-  // ---- 主流程：重新計算並渲染 ----
-  function update() {
-    const r = compute();
-    renderStats(r);
-    renderChart(r);
-    syncQuickButtons();
-    save();
-  }
-
-  // ---- 事件綁定 ----
-  ['initial', 'monthly', 'rate', 'years'].forEach((k) => {
-    el[k].addEventListener('input', update);
-  });
-  document.querySelectorAll('.quick-btn').forEach((b) => {
-    b.addEventListener('click', () => { el.rate.value = b.dataset.rate; update(); });
-  });
-
-  // ---- 初始化 ----
-  load();
-  update();
-})();
+  window.update=update;
+  $("metaDesc");
+  setLang(LANG);
+  fetch("https://abacus.jasoncameron.dev/hit/sm413-compound/views").then(r=>r.json()).then(d=>{$("vc").textContent="👁 "+Number(d.value).toLocaleString()+" views";}).catch(()=>{});
+  document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a');if(a&&a.href&&typeof gtag==='function'&&a.href.indexOf('slashman413.github.io')>-1)gtag('event','internal_click',{link_url:a.href});});
+  try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
 </script>
-<div style="max-width:680px;margin:20px auto;padding:0 16px;font-family:sans-serif;color:#334155"><div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;margin-bottom:8px">FAQ · 常見問題</div><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:8px"><summary style="cursor:pointer;font-weight:600">複利是怎麼計算的？ / How is it calculated?</summary><p style="margin-top:6px;font-size:14px;color:#475569">以每月投入 + 年化報酬率逐月複利累積，並畫出累積本金 vs 獲利。Monthly contributions compound at your annual rate; chart shows principal vs gains.</p></details><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:8px"><summary style="cursor:pointer;font-weight:600">報酬率填多少合理？ / What return rate?</summary><p style="margin-top:6px;font-size:14px;color:#475569">長期大盤 ETF 約 6–8%，僅供參考非保證。Broad-market ETFs ~6–8% historically; reference only.</p></details><details style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px"><summary style="cursor:pointer;font-weight:600">免費嗎？ / Free?</summary><p style="margin-top:6px;font-size:14px;color:#475569">完全免費，本機運算。Completely free, runs locally.</p></details></div>
-<div id="vc" style="text-align:center;font-size:11px;color:#94a3b8;margin:12px 0;opacity:.85"></div><script>fetch("https://abacus.jasoncameron.dev/hit/sm413-compound/views").then(function(r){return r.json()}).then(function(d){document.getElementById("vc").textContent="\u{1F441} "+Number(d.value).toLocaleString()+" 次瀏覽 · views";}).catch(function(){});</script></body>
+</body>
 </html>
